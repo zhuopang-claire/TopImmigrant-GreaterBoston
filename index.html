@@ -12,10 +12,10 @@
         <link rel="stylesheet" href="css/qgis2web.css">
         <link rel="stylesheet" href="css/fontawesome-all.min.css">
         <style>
-        #map {
-            width: 1764px;
-            height: 1240px;
-        }
+         #map {
+         width: 100%;
+         height: 90vh;   /* fills most of the viewport; tweak if you want */
+             }
         </style>
         <title>Top Immigrant Groups by Municipality in Greater Boston</title>
     </head>
@@ -52,8 +52,16 @@
             highlightLayer.openPopup();
         }
         var map = L.map('map', {
-            zoomControl:false, maxZoom:28, minZoom:1
-        }).fitBounds([[41.593785733095224,-72.88534284237225],[43.125664293906176,-69.92982931409044]]);
+        zoomControl: false,
+        maxZoom: 18,
+        minZoom: 6
+        });
+
+        // start centered on Greater Boston (Boston Common-ish) at a regional zoom
+        map.setView([42.3601, -71.0589], 9);
+
+        // keep it crisp after any container resize
+        setTimeout(function () { map.invalidateSize(); }, 300);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
